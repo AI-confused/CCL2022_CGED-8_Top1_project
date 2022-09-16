@@ -1,0 +1,3 @@
+opencc-python-reimplemented
+Levenshtein
+tqdm
