@@ -1,3 +1,4 @@
 opencc-python-reimplemented
 Levenshtein
 tqdm
+easy-task==0.0.29
