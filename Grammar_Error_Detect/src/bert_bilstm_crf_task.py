@@ -10,7 +10,7 @@ from transformers import BertConfig, get_cosine_schedule_with_warmup, get_linear
     AutoConfig, DebertaTokenizer
 from easy_task.base_module import *
 from model import BertBiLstmCrfForNer, CGEDModel, BERTChineseCharacterTokenizer, BertCrfForNer, FGM, PGD, BertCrfForNerRdrop
-from detect_result import GrammarDetectResult
+from Grammar_Error_Detect.src.bert_bilstm_crf_result import GrammarDetectResult
 
 
 

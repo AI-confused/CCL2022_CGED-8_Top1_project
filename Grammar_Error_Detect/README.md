@@ -22,18 +22,18 @@
 
 ### 如何运行
 #### Train
-1. 修改config/bert_crf_train.yml配置文件中的超参数
-2. run_task_bert_crf.py入口文件中第10和11行选择该配置文件的那一行
+1. 修改`config/bert_crf_train.yml`配置文件中的超参数
+2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行
 3. `python3 src/run_task_bert_crf.py`
-4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
+4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 ##### **TODO**
 说明训练数据版本或者统一版本
 #### Test
-1. 修改config/bert_crf_predict.yml配置文件中的超参数
-2. run_task_bert_crf.py入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
+1. 修改`config/bert_crf_predict.yml`配置文件中的超参数
+2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
 3. `python3 src/run_task_bert_crf.py`
-4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
-5. 将测试集预测结果转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
+4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
+5. 将测试集预测结果通过`convert_predict.ipynb`转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
 ### 实验记录
 #### lang8预训练阶段(历年20+21测试集作为验证集)
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |
@@ -43,8 +43,8 @@
 #### 历年数据微调阶段(历年20+21测试集作为验证集)
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |
 |:---:|:---:|:---:|:---:|:---:|
-|20+21测试集|||||
-|22测试集|||||
+|20+21测试集|0.2144|0.7989|0.5301|0.3004|
+|22测试集|0.2212|0.7836|0.5135|0.3058|
 ## Bert+BiLSTM+CRF
 ### 模型方案
 1. 基于Bert+CRF的思路，我们在中间添加了一个BiLSTM层，尝试下能否给CRF提供更好的发射矩阵，模型采用Macbert-large+BiLSTM+CRF，序列标注标签为BIEOS方案，但是这里尝试了新的方案：一共13个类别，把一些不可能出现的标签去掉了（M类型只有Single，W类型没有Single）
@@ -71,21 +71,21 @@
 3. `python3 src/run_task_bert_bilstm_crf.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 ##### **TODO**
-说明训练数据版本或者统一版本
+说明训练数据版本或者统一版本(**统一版本**)
 #### Test
 1. 修改config/bert_crf_bilstm_predict.yml配置文件中的超参数
 2. run_task_bert_crf.py入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
 3. `python3 src/run_task_bert_bilstm_crf.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
-5. 将测试集预测结果转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
+5. 将测试集预测结果通过`convert_predict.ipynb`转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
 ### 实验记录
 #### lang8预训练阶段(历年20+21测试集作为验证集)
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |
 |:---:|:---:|:---:|:---:|:---:|
-|20+21测试集|||||
-|22测试集|||||
+|20+21测试集|0.1858|0.8007|0.5318|0.3014|
+|22测试集|0.2183|0.7780|0.4978|0.3013|
 #### 历年数据微调阶段(历年20+21测试集作为验证集)
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |
 |:---:|:---:|:---:|:---:|:---:|
-|20+21测试集|||||
-|22测试集|||||
+|20+21测试集|0.1799|0.8083|0.5635|0.3514|
+|22测试集|0.2094|0.7753|0.5089|0.3298|
