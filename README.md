@@ -5,6 +5,8 @@
 参赛队伍名：NLP的未来
 
 组员：好未来TAL@李云良(liyunliang@tal.com)，好未来TAL@王智浩(wangzhihao3@tal.com)，好未来TAL@胡飞(hufei6@tal.com)
+
+![图1](./pic/比赛结果.png)
 ## 仓库结构
 1. data_preprocess
 
