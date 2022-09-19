@@ -1,0 +1,50 @@
+data_dir: /home/liyunliang/CGED_Task/dataset/
+exp_dir: /home/liyunliang/CGED_Task/output/
+# model_name: /home/liyunliang/pretrained_model/chinese_wwm_ext_pytorch/
+model_name: /home/liyunliang/pretrained_model/bart_chinese_large/
+# model_name: /home/liyunliang/pretrained_model/bart_chinese_base/
+# model_name: /home/liyunliang/pretrained_model/chinese_macbert_large/
+# model_name: /home/liyunliang/pretrained_model/chinese_roberta_wwm_ext_large/
+# task_name: 'Grammar_detect_task_predict_fanti(15-18)_dev'
+# task_name: 'Grammar_correct_task_predict_track3_yaclc-minimal_testA'
+# task_name: 'Grammar_correct_task_predict_baidu_testA'
+# task_name: 'Grammar_correct_task_predict_track3_yaclc-fluency_testA'
+task_name: 'Grammar_correct_task_predict_22'
+skip_train: 1
+resume_model_path: /home/liyunliang/CGED_Task/output/Grammar_correct_task_ptr-gen_bart-large_5e-5_lang8+linian_cosine_drop0.1_beam3_check/Model/Grammar_correct_task_ptr-gen_bart-large_5e-5_lang8+linian_cosine_drop0.1_beam3_check.cpt.dev.0.e(10).b(16).p(1。0).s(99)
+# resume_model_path: /home/liyunliang/CGED_Task/output/Grammar_correct_task_s2a_bart-base_5e-6_lang8-all-base_14-18_simply_train+test_char_drop0.1_cosine_alpha(0.1)/Model/Grammar_correct_task_s2a_bart-base_5e-6_lang8-all-base_14-18_simply_train+test_char_drop0.1_cosine_alpha(0.1).cpt.dev.0.e(20).b(64).p(1。0).s(99)
+# case_feature_text_dict_file: /home/liyunliang/NBME/dataset/case_feature_text_dict.json
+# return_offsets_mapping: True
+# scheduler: linear
+# adverse_train: fgm
+# warmup_steps: 1430
+# truncation: only_second
+# padding: max_length
+beam_k: 3
+train_file_name: train.jsonl
+dev_file_name: dev.jsonl
+test_file_name: cged2022/cged2022-test.jsonl
+# test_file_name: baiduGEC/preliminary_a_test_source.jsonl
+# test_file_name: track3/yaclc-fluency_testA.jsonl
+# test_file_name: track3/yaclc-minimal_testA.jsonl
+# test_file_name: jianti_14-18_train+test_charlevel/detect_dev.jsonl
+load_test: 1
+# evaluation_metric: 'posi_f1'
+# threshold: 0.5
+dropout: 0.1
+max_seq_len: 256
+train_batch_size: 128
+eval_batch_size: 64
+learning_rate: 1e-5
+num_train_epochs: 100
+no_cuda: False
+# specify the GPU number
+cuda_device: '0'
+seed: 99
+gradient_accumulation_steps: 1
+over_write_cache: 1
+resume_latest_cpt: 1
+bad_case: 0
+# save_cpt_flag value: {0: only save best model; 1: save best model & last epoch model; 2: save best model & each epoch model}
+save_cpt_flag: 1
+percent: 1.0
