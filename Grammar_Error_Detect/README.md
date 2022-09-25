@@ -7,7 +7,7 @@
 
 2. 考虑到序列标注问题的特殊性，我们对Bert分词器的tokenize功能进行了继承重写，直接用list(text)替换，确保不会因为分词导致解码的问题
 
-3. 该任务代码基于深度学习训练框架[easy-task](https://github.com/AI-confused/easy_task)编写，需要在环境中pip install easy-task==0.0.29，以便与运行任务代码库
+3. 该任务代码基于深度学习训练框架[easy-task](https://github.com/AI-confused/easy_task)编写，需要在环境中pip install easy-task==0.0.30，以便与运行任务代码库
 
 4. 整体训练策略为：先用lang8数据预训练，再基于前者最好的模型，用历年数据训练集微调，2个阶段的训练超参数如下：
 
@@ -22,9 +22,9 @@
 
 ### 如何运行
 #### Train
-1. 修改`config/bert_crf_train.yml`配置文件中的超参数
+1. 修改`config/bert_crf_train.yml`配置文件中的超参数(**超参数含义见配置文件注释**)
 2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行
-3. `python3 src/run_task_bert_crf.py`
+3. 进入`Bert+CRF`工作目录，运行入口文件`python3 src/run_task_bert_crf.py`
 4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 ##### **TODO**
 说明训练数据版本或者统一版本
@@ -53,7 +53,7 @@
 
 2. 考虑到序列标注问题的特殊性，同样对Bert分词器的tokenize功能进行了继承重写，直接用list(text)替换，确保不会因为分词导致解码的问题
 
-3. 该任务代码基于深度学习训练框架[easy-task](https://github.com/AI-confused/easy_task)编写，需要在环境中pip install easy-task==0.0.29，以便与运行任务代码库
+3. 该任务代码基于深度学习训练框架[easy-task](https://github.com/AI-confused/easy_task)编写，需要在环境中pip install easy-task==0.0.30，以便与运行任务代码库
 
 4. 整体训练策略为：先用lang8数据预训练，再基于前者最好的模型，用历年数据训练集微调，2个阶段的训练超参数如下：
 
@@ -68,7 +68,7 @@
 ### 如何运行
 1. 修改config/bert_bilstm_crf_train.yml配置文件中的超参数
 2. run_task_bert_bilstm_crf.py入口文件中第10和11行选择该配置文件的那一行
-3. `python3 src/run_task_bert_bilstm_crf.py`
+3. 进入`Bert+BiLSTM+CRF`工作目录，运行入口文件`python3 src/run_task_bert_bilstm_crf.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 ##### **TODO**
 说明训练数据版本或者统一版本(**统一版本**)
@@ -89,3 +89,11 @@
 |:---:|:---:|:---:|:---:|:---:|
 |20+21测试集|0.1799|0.8083|0.5635|0.3514|
 |22测试集|0.2094|0.7753|0.5089|0.3298|
+
+## yml配置文件参数信息
+    skip_train：训练模型为0，预测模型为1
+    exp_dir：输出保存目录
+    task_name：任务名称，整个训练任务的输出会保存在`exp_dir/task_name/`
+    eval_portion：预测验证集指标的频率，0.5意思是每半个epoch运行一次验证集指标
+    bad_case：是否输出bad case结果
+    save_cpt_flag：模型保存机制，0是仅保存最佳checkpoint的模型; 1是保存最佳checkpoint和最后一个epoch的模型; 2是保存最佳checkpoint和每个epoch的模型

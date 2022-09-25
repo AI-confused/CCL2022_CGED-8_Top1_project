@@ -1,22 +1,14 @@
-data_dir: /home/liyunliang/CGED_Task/dataset/
-exp_dir: /home/liyunliang/CGED_Task/output/
-model_name: /home/liyunliang/pretrained_model/chinese_macbert_large/
-# task_name: 'Grammar_detect_task_macbert-large_1e-5_lang8-all_drop0.1_cosine_bio13_rdrop(10)'
-# task_name: 'Grammar_detect_task_macbert-large_bilstm+crf_5e-6_lang8-all-base_14-18_simply_train+test_char_drop0.5_cosine(0.1)'
-# task_name: 'Grammar_detect_task_macbert-large_1e-5_lang8-aug_drop0.1_cosine'
+data_dir: /home/CGED_Task/dataset/
+exp_dir: /home/CGED_Task/output/
+model_name: /home/pretrained_model/chinese_macbert_large/
 task_name: 'Grammar_detect_task_macbert-large_1e-5_lang8-all_drop0.1_cosine_check'
 skip_train: 0
 scheduler: cosine
-# adverse_train: fgm
-# freeze_layers:
-#   - bert
 warmup_portion: 0.0
 eval_portion: 0.5
-# train_file_name: jianti_14-18_train+test_charlevel/detect_all_data_v4_aug.jsonl
 train_file_name: lang8/lang8_data_v2.jsonl
 dev_file_name: jianti_14-18_train+test_charlevel/detect_dev_v2.jsonl
 load_test: 0
-# evaluation_metric: 'posi_f1'
 dropout: 0.1
 max_seq_len: 256
 train_batch_size: 256
