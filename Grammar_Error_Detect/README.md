@@ -26,8 +26,6 @@
 2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行
 3. 进入`Bert+CRF`工作目录，运行入口文件`python3 src/run_task_bert_crf.py`
 4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
-##### **TODO**
-说明训练数据版本或者统一版本
 #### Test
 1. 修改`config/bert_crf_predict.yml`配置文件中的超参数
 2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
@@ -70,8 +68,6 @@
 2. run_task_bert_bilstm_crf.py入口文件中第10和11行选择该配置文件的那一行
 3. 进入`Bert+BiLSTM+CRF`工作目录，运行入口文件`python3 src/run_task_bert_bilstm_crf.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
-##### **TODO**
-说明训练数据版本或者统一版本(**统一版本**)
 #### Test
 1. 修改config/bert_crf_bilstm_predict.yml配置文件中的超参数
 2. run_task_bert_crf.py入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
