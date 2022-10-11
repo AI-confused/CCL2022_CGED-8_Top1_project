@@ -1,7 +1,7 @@
 # 语法检测模型
 ## Bert+CRF
 ### 模型方案
-1. 基于上一届冠军方案的思路，我们沿用了Bert+CRF的模型，采用Macbert-large+CRF，序列标注标签为BIEOS方案，一共17个类别
+1. 基于上一届冠军方案的思路，我们沿用了Bert+CRF的模型，采用[Macbert-large](https://huggingface.co/hfl/chinese-macbert-large)+CRF，序列标注标签为BIEOS方案，一共17个类别
 
 `'O', 'S-B', 'M-B', 'W-B', 'R-B', 'S-I', 'M-I', 'W-I', 'R-I', 'S-E', 'M-E', 'W-E', 'R-E', 'S-S', 'M-S', 'W-S', 'R-S'`
 
@@ -21,17 +21,20 @@
 6. 保存最佳模型的参考指标为**detect_f1 + iden_f1 + posidentification_f1 - FPR**，这样保存的模型不会偏向于某一个指标，而是趋向于总分最高，因为在初始的实验中发现：如果按照序列标注的posidentification_f1指标来保存模型的话，最佳模型的posi偏高，但是FPR也会偏高，这样总分其实是会下降的
 
 ### 如何运行
-#### Train
-1. 修改`config/bert_crf_train.yml`配置文件中的超参数(**超参数含义见配置文件注释**)
-2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行
-3. 进入`Bert+CRF`工作目录，运行入口文件`python3 src/run_task_bert_crf.py`
+#### Train(lang8预训练)
+1. 修改`config/bert_crf_train_pretrain.yml`配置文件中的超参数(**超参数含义见配置文件注释**)
+2. 进入`Bert+CRF`工作目录，运行入口文件`python3 src/run_task_bert_crf_pretrain.py`
+3. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
+#### Train(历年数据微调)
+1. 修改`config/bert_crf_train_finetune.yml`配置文件中的超参数(**超参数含义见配置文件注释**)
+2. `run_task_bert_crf_finetune.py`第28行resume_model_path赋值为lang8预训练阶段最佳模型保存地址
+3. 进入`Bert+CRF`工作目录，运行入口文件`python3 src/run_task_bert_crf_finetune.py`
 4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 #### Test
 1. 修改`config/bert_crf_predict.yml`配置文件中的超参数
-2. `run_task_bert_crf.py`入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
-3. `python3 src/run_task_bert_crf.py`
-4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
-5. 将测试集预测结果通过`convert_predict.ipynb`转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
+2. `python3 src/run_task_bert_crf_predict.py`
+3. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
+4. 将测试集预测结果通过`convert_predict.ipynb`转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
 ### 实验记录
 #### lang8预训练阶段(历年20+21测试集作为验证集)
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |
@@ -64,14 +67,18 @@
 
 6. 保存最佳模型的参考指标为**detect_f1 + iden_f1 + posidentification_f1 - FPR**，这样保存的模型不会偏向于某一个指标，而是趋向于总分最高，因为在初始的实验中发现：如果按照序列标注的posidentification_f1指标来保存模型的话，最佳模型的posi偏高，但是FPR也会偏高，这样总分其实是会下降的
 ### 如何运行
-1. 修改config/bert_bilstm_crf_train.yml配置文件中的超参数
-2. run_task_bert_bilstm_crf.py入口文件中第10和11行选择该配置文件的那一行
-3. 进入`Bert+BiLSTM+CRF`工作目录，运行入口文件`python3 src/run_task_bert_bilstm_crf.py`
+#### Train（lang8预训练）
+1. 修改config/bert_bilstm_crf_train_pretrain.yml配置文件中的超参数
+3. 进入`Bert+BiLSTM+CRF`工作目录，运行入口文件`python3 src/run_task_bert_bilstm_crf_pretrain.py`
+4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
+#### Train（历年数据微调）
+1. 修改config/bert_bilstm_crf_train_finetune.yml配置文件中的超参数
+2. `bert_bilstm_crf_finetune.py`第28行resume_model_path赋值为lang8预训练阶段最佳模型保存地址
+3. 进入`Bert+BiLSTM+CRF`工作目录，运行入口文件`python3 src/run_task_bert_bilstm_crf_finetune.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 #### Test
 1. 修改config/bert_crf_bilstm_predict.yml配置文件中的超参数
-2. run_task_bert_crf.py入口文件中第10和11行选择该配置文件的那一行，第27行中resume_model_path赋值为第一步lang8预训练任务的最佳模型地址
-3. `python3 src/run_task_bert_bilstm_crf.py`
+3. `python3 src/run_task_bert_bilstm_crf_predict.py`
 4. 运行任务后，在工作目录下的output/"task_name"/Log/会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
 5. 将测试集预测结果通过`convert_predict.ipynb`转换为提交格式，由于该模型为检测模型，没有S和M类型的纠正结果，因此这里只有检测相关的指标体现
 ### 实验记录
@@ -93,3 +100,9 @@
     eval_portion：预测验证集指标的频率，0.5意思是每半个epoch运行一次验证集指标
     bad_case：是否输出bad case结果
     save_cpt_flag：模型保存机制，0是仅保存最佳checkpoint的模型; 1是保存最佳checkpoint和最后一个epoch的模型; 2是保存最佳checkpoint和每个epoch的模型
+# 运行环境
+## conda虚拟环境
+    python 3.7.13
+## 服务器环境
+    CUDA Version: 11.4
+    GPU: 8 * Tesla V100 32510 MiB

@@ -1,13 +1,13 @@
-data_dir: /home/CCL2022_CGED-8_Top1_project/dataset/
-exp_dir: /home/CGED_Task/output/
-model_name: /home/pretrained_model/chinese_macbert_large/
-task_name: 'Grammar_detect_task_macbert-large_bilstm+crf_1e-5_lang8-all_drop0.1_cosine'
+data_dir: $CCL2022_CGED-8_Top1_project/dataset/
+exp_dir: $CCL2022_CGED-8_Top1_project/Grammar_Error_Detect/Bert+CRF/output/
+model_name: $chinese_macbert_large的地址
+task_name: 'Grammar_detect_task_macbert-large_1e-5_lang8-pretrain_drop0.1_cosine'
 skip_train: 0
 scheduler: cosine
 warmup_portion: 0.0
 eval_portion: 0.5
 train_file_name: lang8/lang8_data_v2.jsonl
-dev_file_name: jianti_14-18_train+test_charlevel/detect_dev_v2.jsonl
+dev_file_name: jianti_14-18_train+test_charlevel/detect_dev.jsonl
 load_test: 0
 dropout: 0.1
 max_seq_len: 256
@@ -17,9 +17,9 @@ learning_rate: 1e-5
 num_train_epochs: 10
 no_cuda: False
 # specify the GPU number
-cuda_device: '4,5,6,7'
+cuda_device: '0,1,2,3,4,5,6,7'
 seed: 99
-gradient_accumulation_steps: 2
+gradient_accumulation_steps: 1
 over_write_cache: 1
 resume_latest_cpt: 0
 bad_case: 1

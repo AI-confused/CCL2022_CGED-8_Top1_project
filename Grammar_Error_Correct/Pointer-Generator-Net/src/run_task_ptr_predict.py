@@ -5,7 +5,7 @@ from ptr_gen_net_task import GrammarCorrectTask
 
 if __name__ == '__main__':
     # init task utils
-    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/grammar_ptr_train.yml'))
+    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/grammar_ptr_predict.yml'))
 
     # init task setting
     task_setting = TaskSetting(task_utils.task_configuration)

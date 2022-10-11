@@ -5,7 +5,7 @@ exp_dir: $CCL2022_CGED-8_Top1_project/Grammar_Error_Correct/Pointer-Generator-Ne
 # 预训练语言模型地址
 model_name: $bart_chinese_large目录
 # 任务名，以该命名保存结果（自定义）
-task_name: 'Grammar_correct_task_ptr-gen_bart-large_5e-5_lang8+linian_cosine_drop0.1_beam3'
+task_name: 'Grammar_correct_task_ptr-gen-second_bart-large_5e-6_linian_cosine_drop0.1_beam3'
 # 训练时为0，预测时为1
 skip_train: 0
 # 学习率调度
@@ -17,7 +17,7 @@ warmup_portion: 0.0
 # 跑验证集的epoch比例，0.5的意思是每半个epoch跑一次验证集
 eval_portion: 0.5
 # 训练集地址
-train_file_name: lang8+linian/train.jsonl
+train_file_name: jianti_14-18_train+test_charlevel/detect_all_data.jsonl
 # 验证集地址
 dev_file_name: jianti_14-18_train+test_charlevel/detect_dev.jsonl
 # 是否加载测试集
@@ -26,13 +26,13 @@ dropout: 0.1
 max_seq_len: 256
 train_batch_size: 256
 eval_batch_size: 32
-learning_rate: 5e-5
+learning_rate: 5e-6
 num_train_epochs: 10
 no_cuda: False
 # specify the GPU number
-cuda_device: '2,3'
+cuda_device: '2,3,4,5'
 seed: 99
-gradient_accumulation_steps: 16
+gradient_accumulation_steps: 8
 over_write_cache: 1
 resume_latest_cpt: 0
 bad_case: 1

@@ -2,13 +2,14 @@ import os
 import sys
 sys.path.append('/home/liyunliang/CGED_Task/src/transformer')
 from easy_task.base_module import BaseUtils, TaskSetting
-from Grammar_Error_Detect.src.bert_bilstm_crf_task import GrammarDetectTask
+from Grammar_Error_Detect.src.bert_crf_task import GrammarDetectTask
 
 
 if __name__ == '__main__':
     # init task utils
-    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_bilstm_crf_train.yml'))
-    # task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_bilstm_crf_predict.yml'))
+    # task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_train_pretrain.yml'))
+    # task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_train_finetune.yml'))
+    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_predict.yml'))
 
     # init task setting
     task_setting = TaskSetting(task_utils.task_configuration)

@@ -5,7 +5,7 @@ from ptr_gen_net_task import GrammarCorrectTask
 
 if __name__ == '__main__':
     # init task utils
-    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/grammar_ptr_train.yml'))
+    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/grammar_ptr_train_second_phase.yml'))
 
     # init task setting
     task_setting = TaskSetting(task_utils.task_configuration)
@@ -16,8 +16,8 @@ if __name__ == '__main__':
     # do train
     if not task_setting.skip_train:
         task.output_result['result_type'] = 'Train_mode'
-        # 从0开始训练
-        task.train()
+        # 基于已有的模型checkpoint开始二阶段训练
+        task.train(resume_model_path='基于lang8+历年数据训练的指针生成网络最佳checkpoint')
     # do test
     else:
         task.output_result['result_type'] = 'Test_mode'

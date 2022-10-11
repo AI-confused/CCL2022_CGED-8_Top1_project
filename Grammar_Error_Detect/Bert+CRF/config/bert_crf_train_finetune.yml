@@ -1,19 +1,19 @@
-data_dir: /home/CGED_Task/dataset/
-exp_dir: /home/CGED_Task/output/
-model_name: /home/pretrained_model/chinese_macbert_large/
-task_name: 'Grammar_detect_task_macbert-large_1e-5_lang8-all_drop0.1_cosine_check'
+data_dir: $CCL2022_CGED-8_Top1_project/dataset/
+exp_dir: $CCL2022_CGED-8_Top1_project/Grammar_Error_Detect/Bert+CRF/output/
+model_name: $chinese_macbert_large的地址
+task_name: 'Grammar_detect_task_macbert-large_5e-6_linian-finetune_drop0.3_cosine'
 skip_train: 0
 scheduler: cosine
 warmup_portion: 0.0
 eval_portion: 0.5
-train_file_name: lang8/lang8_data_v2.jsonl
-dev_file_name: jianti_14-18_train+test_charlevel/detect_dev_v2.jsonl
+train_file_name: jianti_14-18_train+test_charlevel/detect_all_data.jsonl
+dev_file_name: jianti_14-18_train+test_charlevel/detect_dev.jsonl
 load_test: 0
-dropout: 0.1
+dropout: 0.3
 max_seq_len: 256
 train_batch_size: 256
 eval_batch_size: 256
-learning_rate: 1e-5
+learning_rate: 5e-6
 num_train_epochs: 10
 no_cuda: False
 # specify the GPU number

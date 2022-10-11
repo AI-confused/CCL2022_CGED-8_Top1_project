@@ -1,0 +1,11 @@
+opencc-python-reimplemented
+Levenshtein
+tqdm
+easy-task==0.0.30
+transformers==4.19.2
+scikit-learn
+pyyaml==6.0
+pandas
+emoji==1.7.0
+torch==1.7.1
+opencc-python-reimplemented==0.1.6

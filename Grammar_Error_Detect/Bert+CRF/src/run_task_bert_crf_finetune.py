@@ -7,7 +7,8 @@ from Grammar_Error_Detect.src.bert_crf_task import GrammarDetectTask
 
 if __name__ == '__main__':
     # init task utils
-    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_train.yml'))
+    # task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_train_pretrain.yml'))
+    task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_train_finetune.yml'))
     # task_utils = BaseUtils(task_config_path=os.path.join(os.getcwd(), 'config/bert_crf_predict.yml'))
 
     # init task setting
@@ -24,7 +25,7 @@ if __name__ == '__main__':
             task.train()
         # 训练集为历年数据集，则基于lang8的模型继续训练
         else:
-            task.train(resume_model_path='/home/liyunliang/CGED_Task/output/Grammar_detect_task_macbert-large_5e-6_lang8-all-base_linian-aug_drop0.3_cosine/Model/Grammar_detect_task_macbert-large_5e-6_lang8-all-base_linian-aug_drop0.3_cosine.cpt.dev.0.e(10).b(32).p(1。0).s(99)')
+            task.train(resume_model_path='lang8预训练阶段的最佳checkpoint')
     # do test
     else:
         task.output_result['result_type'] = 'Test_mode'

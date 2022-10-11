@@ -10,7 +10,9 @@
 ## 仓库结构
 1. data_preprocess
 
-    数据预处理模块，包含对lang8和历年数据的预处理代码及策略
+    1）数据预处理模块，包含对lang8和历年数据的预处理代码及策略
+
+    2）在dataset/目录下新建lang8/子目录，将lang8.train.ccl22.para放入该目录下
 2. dataset
 
     存放了直接用来训练的历年数据的训练集和验证集
@@ -29,9 +31,9 @@
 
     模型融合策略代码
 
-## 运行环境
-### conda虚拟环境
-    python 3.7.13
-### 服务器环境
-    CUDA Version: 11.4
-    GPU: 8 * Tesla V100 32510 MiB
+## 复现流程
+1. 将lang8.train.ccl22.para文件放入指定目录，进入data_preprocess目录，按照步骤构造lang8数据集和lang8+linian数据集
+
+2. 进入相应的算法模块，按照步骤进行复现，获取相应的预测结果
+
+3. 进入model_fuse模块，跑出融合结果

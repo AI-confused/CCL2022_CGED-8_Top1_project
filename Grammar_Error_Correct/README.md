@@ -11,18 +11,17 @@
 | 数据集  | lr     |max_seq_len|batch_size|dropout|scheduler|warmup|epoch|beam_k|GPU卡数|梯度累积|seed|
 |:-------:|:-------:|:-----:|:-------:|:--------:|:------:|:-----:|:--------:|:-----:|:-----:|:--------:|:--------:|
 | lang8+CGED历年训练集   |  5e-5  |256        |256       |0.1    |   cosine|0.0|10 |3 |2|16|99|
+7. 为了缓解生成结果的[UNK]问题，需要将Bart-large的vocab.txt的部分词表替换成中文标点，具体为：将(第1行为[PAD])第2行～第7行替换为‘’“”…—
 ### 如何运行
 #### Train
 1. 修改`Pointer-Generator-Net/config/grammar_ptr_train.yml`配置文件中的超参数
-2. `Pointer-Generator-Net/src/run_task_ptr.py`入口文件中第8和9行选择该配置文件的那一行
-3. `python3 Pointer-Generator-Net/src/run_task_ptr.py`
-4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
+2. `python3 Pointer-Generator-Net/src/run_task_ptr.py`
+3. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 #### Test
 1. 修改`Pointer-Generator-Net/config/grammar_ptr_predict.yml`配置文件中的超参数
-2. `Pointer-Generator-Net/src/run_task_ptr.py`入口文件中第8和9行选择该配置文件的那一行
-3. `python3 Pointer-Generator-Net/src/run_task_ptr.py`
-4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
-5. 将测试集预测结果通过`Grammar_Error_Correct/convert_predict.ipynb`转换为提交格式
+2. `python3 Pointer-Generator-Net/src/run_task_ptr_predict.py`
+3. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
+4. 将测试集预测结果通过`Grammar_Error_Correct/convert_predict.ipynb`转换为提交格式
 ### 实验记录
 由于验证集的S和M纠正结果只有一个备选项，与线上评测情况可能存在出入（线上评测每个样本可能存在多个纠正结果），因此这里的验证集指标不考虑correction_f1与评测总分
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |correction_f1|评测分数|
@@ -35,21 +34,21 @@
 2. 评测结果的变化为：FPR增大，检测相关的指标同样也增大，带来了整体指标的上升
 ### 如何运行
 #### Train
-1. 修改`Pointer-Generator-Net/config/grammar_ptr_train.yml`配置文件中的超参数
-2. `Pointer-Generator-Net/src/run_task_ptr.py`入口文件中第8和9行选择该配置文件的那一行，注释第21行，高亮第23行，给`resume_model_path`赋值为上述指针生成网络的最佳模型地址，让任务基于最佳模型继续训练
-3. `python3 Pointer-Generator-Net/src/run_task_ptr.py`
+1. 修改`Pointer-Generator-Net/config/grammar_ptr_train_second_phase.yml`配置文件中的超参数
+2. `Pointer-Generator-Net/src/run_task_ptr_second_phase.py`给`resume_model_path`赋值为上述指针生成网络的最佳模型地址，让任务基于最佳模型继续训练
+3. `python3 Pointer-Generator-Net/src/run_task_ptr_second_phase.py`
 4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的训练日志文件，包含训练过程中的每个验证结果的指标、保存的badcase文件地址、保存的最佳模型(模型文件名包含dev.0)和每个验证checkpoint模型(模型文件名包含checkpoint)地址
 5. 训练的超参数配置为：
 
 | 数据集  | lr     |max_seq_len|batch_size|dropout|scheduler|warmup|epoch|beam_k|GPU卡数|梯度累积|seed|
 |:-------:|:-------:|:-----:|:-------:|:--------:|:------:|:-----:|:--------:|:-----:|:-----:|:--------:|:--------:|
 | CGED历年训练集   |  5e-6  |256        |256       |0.1    |   cosine|0.0|10 |3 |4|8|99|
+6. 为了缓解生成结果的[UNK]问题，需要将Bart-large的vocab.txt的部分词表替换成中文标点，具体为：将(第1行为[PAD])第2行～第7行替换为‘’“”…—
 #### Test
 1. 修改`Pointer-Generator-Net/config/grammar_ptr_predict.yml`配置文件中的超参数
-2. `Pointer-Generator-Net/src/run_task_ptr.py`入口文件中第8和9行选择该配置文件的那一行
-3. `python3 Pointer-Generator-Net/src/run_task_ptr.py`
-4. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
-5. 将测试集预测结果通过`Grammar_Error_Correct/convert_predict.ipynb`转换为提交格式
+2. `python3 Pointer-Generator-Net/src/run_task_ptr_predict.py`
+3. 运行任务后，在工作目录下的`output/"task_name"/Log/`会生成同步的预测日志文件，包含测试集的预测结果(excel格式)文件地址
+4. 将测试集预测结果通过`Grammar_Error_Correct/convert_predict.ipynb`转换为提交格式
 ### 实验记录
 由于验证集的S和M纠正结果只有一个备选项，与线上评测情况可能存在出入（线上评测每个样本可能存在多个纠正结果），因此这里的验证集指标不考虑correction_f1与评测总分
 |数据集|  FPR |   detect_f1 |   identification_f1 |   position_f1 |correction_f1|评测分数|
